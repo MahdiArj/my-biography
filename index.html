@@ -12,85 +12,111 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     
     <style>
         /* Custom Font Assignments */
-        .font-serif {
-            font-family: 'Playfair Display', serif;
-        }
-        .font-sans {
-            font-family: 'Inter', sans-serif;
-        }
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .font-sans { font-family: 'Inter', sans-serif; }
 
-        /* Smooth gradient mask for the image to blend into the background */
+        /* Smooth gradient mask */
         .image-fade-mask {
             mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
             -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
         }
 
-        /* Custom color variables extracted from the reference */
+        /* Hide scrollbar for chat */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Custom color variables */
         :root {
-            --bg-gold: #B6A986; /* The main background color at the bottom */
-            --bg-dark: #2A2A35; /* The darker tone at the top */
+            --bg-gold: #B6A986;
+            --bg-dark: #2A2A35;
             --text-brown: #3E3425;
             --btn-bg: #F0F2F0;
+        }
+
+        /* Typing indicator animation */
+        .typing-dot {
+            animation: typing 1.4s infinite ease-in-out both;
+        }
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+        
+        @keyframes typing {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
         }
     </style>
 </head>
 <body class="bg-[#B6A986] min-h-screen flex justify-center items-start sm:items-center font-sans antialiased selection:bg-black/20">
 
-    <!-- Mobile Container (Simulating the phone screen size) -->
-    <div class="relative w-full max-w-md bg-[#B6A986] min-h-screen sm:min-h-[850px] sm:h-auto sm:rounded-[40px] shadow-2xl overflow-hidden flex flex-col">
+    <!-- Mobile Container -->
+    <div class="relative w-full max-w-md bg-[#B6A986] min-h-screen sm:min-h-[850px] sm:h-auto sm:rounded-[40px] shadow-2xl overflow-hidden flex flex-col transition-all duration-300" id="main-container">
         
-        <!-- Top Status Bar Area (Decorative) -->
-        <div class="absolute top-0 w-full p-6 flex justify-between items-center z-20 text-white/80">
-            <!-- Icon: Asterisk/Star (Left) -->
-            <button class="w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-white/30 transition">
-                <i data-lucide="asterisk" class="w-5 h-5 text-white"></i>
-            </button>
-            <!-- Icon: Share (Right) -->
-            <button class="w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-white/30 transition">
+        <!-- Top Status Bar -->
+        <div class="absolute top-0 w-full p-6 flex justify-end items-center z-20 text-white/80">
+            <!-- Asterisk button removed -->
+            <button onclick="shareProfile()" class="w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-white/30 transition" title="Share Website">
                 <i data-lucide="share" class="w-5 h-5 text-white"></i>
             </button>
         </div>
 
-        <!-- 
-            BACKGROUND & PHOTO SECTION 
-            The background gradient starts dark behind the head and fades to the gold color.
-        -->
+        <!-- BACKGROUND & PHOTO SECTION -->
         <div class="relative w-full h-[55vh] sm:h-[450px]">
-            <!-- Dark backdrop behind photo -->
             <div class="absolute inset-0 bg-gradient-to-b from-[#2A2A35] to-[#B6A986]"></div>
-
-            <!-- 
-                USER PHOTO 
-                Updated to link to your uploaded file: IMG_2148.jpg
-                Ensure this image file is in the same folder as this HTML file.
-            -->
             <img 
                 src="IMG_2148.jpg" 
                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop';"
                 alt="Profile Photo" 
                 class="absolute inset-0 w-full h-full object-cover object-top image-fade-mask opacity-90"
             >
-            
-            <!-- Extra gradient overlay at the bottom to ensure smooth text readability -->
             <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#B6A986] via-[#B6A986]/80 to-transparent"></div>
         </div>
 
         <!-- CONTENT SECTION -->
         <div class="relative z-10 px-8 pb-12 flex flex-col items-center -mt-10">
             
-            <!-- Typography -->
             <h1 class="font-serif text-4xl sm:text-5xl text-[#3E3425] mb-3 tracking-wide">Biography</h1>
             
-            <p class="text-center text-[#3E3425]/90 text-sm sm:text-base leading-relaxed font-medium max-w-xs mb-10">
-                Ph.D. Candidate and Recitation Instructor at Civil & Environmental Engineering Department of Louisiana State University
-            </p>
+            <!-- Bio Text with Magic Remix Button -->
+            <div class="relative group w-full flex justify-center mb-10">
+                <p id="bio-text" class="text-center text-[#3E3425]/90 text-sm sm:text-base leading-relaxed font-medium max-w-xs transition-all duration-500">
+                    Ph.D. Candidate and Recitation Instructor at Civil & Environmental Engineering Department of Louisiana State University
+                </p>
+                <!-- Magic Wand Button -->
+                <button onclick="toggleRemixMenu()" class="absolute -right-2 top-0 p-2 text-[#3E3425]/40 hover:text-[#3E3425] transition-colors" title="Remix Bio with AI">
+                    <i data-lucide="sparkles" class="w-4 h-4"></i>
+                </button>
+                
+                <!-- Remix Dropdown (Hidden by default) -->
+                <div id="remix-menu" class="hidden absolute top-8 right-0 bg-white/90 backdrop-blur-md rounded-xl shadow-lg p-2 z-30 w-40 border border-white/20">
+                    <div class="text-xs font-semibold text-gray-500 mb-2 px-2">✨ Rewrite Bio</div>
+                    <button onclick="remixBio('Professional')" class="w-full text-left px-2 py-1.5 text-sm text-gray-700 hover:bg-black/5 rounded-lg transition-colors">Professional</button>
+                    <button onclick="remixBio('Simple')" class="w-full text-left px-2 py-1.5 text-sm text-gray-700 hover:bg-black/5 rounded-lg transition-colors">Explain like I'm 5</button>
+                    <button onclick="remixBio('Witty')" class="w-full text-left px-2 py-1.5 text-sm text-gray-700 hover:bg-black/5 rounded-lg transition-colors">Witty</button>
+                </div>
+            </div>
 
             <!-- Action Buttons Stack -->
             <div class="w-full flex flex-col gap-4">
                 
+                <!-- NEW: AI Chat Button -->
+                <button onclick="openChat()" class="group relative overflow-hidden bg-gradient-to-r from-indigo-900 to-[#2A2A35] hover:to-indigo-800 text-white active:scale-[0.98] transition-all duration-200 h-14 rounded-full flex items-center px-6 shadow-lg border border-white/10">
+                    <!-- Animated Shine Effect -->
+                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
+                    
+                    <div class="text-white/90">
+                        <i data-lucide="message-circle-code" class="w-6 h-6"></i>
+                    </div>
+                    <span class="flex-grow text-center font-semibold text-sm tracking-wide">✨ Chat with my AI</span>
+                    <div class="text-white/50">
+                        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </div>
+                </button>
+
                 <!-- Email Button -->
                 <a href="mailto:marjma1@lsu.edu" class="group bg-[#F0F2F0] hover:bg-white active:scale-[0.98] transition-all duration-200 h-14 rounded-full flex items-center px-6 shadow-sm">
                     <div class="text-gray-800">
@@ -102,8 +128,8 @@
                     </div>
                 </a>
 
-                <!-- Google Scholar Button -->
-                <a href="#" class="group bg-[#F0F2F0] hover:bg-white active:scale-[0.98] transition-all duration-200 h-14 rounded-full flex items-center px-6 shadow-sm">
+                <!-- Google Scholar -->
+                <a href="https://scholar.google.com/citations?user=bsUu7D0AAAAJ&hl=en" class="group bg-[#F0F2F0] hover:bg-white active:scale-[0.98] transition-all duration-200 h-14 rounded-full flex items-center px-6 shadow-sm">
                     <div class="text-gray-800">
                         <i data-lucide="graduation-cap" class="w-6 h-6"></i>
                     </div>
@@ -113,8 +139,8 @@
                     </div>
                 </a>
 
-                <!-- LinkedIn Button -->
-                <a href="#" class="group bg-[#F0F2F0] hover:bg-white active:scale-[0.98] transition-all duration-200 h-14 rounded-full flex items-center px-6 shadow-sm">
+                <!-- LinkedIn -->
+                <a href="https://www.linkedin.com/authwall?trk=bf&trkInfo=AQF0XtTcGhQ84gAAAZwvpoholO_5pikdoH8ojfVlk3QMObDYKK_dIJTV_Bu-EaZ2rEfHj0ZEKmwfJRBrV4HRDua9nip1lsIjZ8iJn2bqkZ-9Jv_FsUyi1xOJ21QnopeEG709kKs=&original_referer=&sessionRedirect=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fmahdi-arjmandazar-390aa495" class="group bg-[#F0F2F0] hover:bg-white active:scale-[0.98] transition-all duration-200 h-14 rounded-full flex items-center px-6 shadow-sm">
                     <div class="text-gray-800">
                         <i data-lucide="linkedin" class="w-6 h-6"></i>
                     </div>
@@ -128,10 +154,255 @@
         </div>
     </div>
 
+    <!-- AI CHAT MODAL OVERLAY -->
+    <div id="chat-modal" class="fixed inset-0 z-50 hidden flex-col bg-black/40 backdrop-blur-sm sm:items-center sm:justify-center p-4">
+        <!-- Chat Container -->
+        <div class="bg-white w-full max-w-md h-full sm:h-[600px] rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-[slideUp_0.3s_ease-out]">
+            
+            <!-- Header -->
+            <div class="bg-[#2A2A35] p-4 flex justify-between items-center text-white">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center">
+                        <i data-lucide="sparkles" class="w-5 h-5 text-white"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-serif text-lg leading-tight">Digital Assistant</h3>
+                        <p class="text-xs text-white/60">Powered by Gemini</p>
+                    </div>
+                </div>
+                <button onclick="closeChat()" class="p-2 hover:bg-white/10 rounded-full transition">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+
+            <!-- Messages Area -->
+            <div id="chat-messages" class="flex-1 bg-gray-50 p-4 overflow-y-auto no-scrollbar flex flex-col gap-4">
+                <!-- Welcome Message -->
+                <div class="flex items-start gap-2 max-w-[85%]">
+                    <div class="w-8 h-8 rounded-full bg-[#2A2A35] flex-shrink-0 flex items-center justify-center text-white text-xs">AI</div>
+                    <div class="bg-white p-3 rounded-2xl rounded-tl-none shadow-sm text-sm text-gray-700 border border-gray-100">
+                        Hello! I'm the digital assistant for this profile. Ask me about the research, background, or how to get in touch!
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="p-4 bg-white border-t border-gray-100">
+                <form id="chat-form" onsubmit="handleChatSubmit(event)" class="relative flex items-center gap-2">
+                    <input 
+                        type="text" 
+                        id="user-input" 
+                        class="w-full bg-gray-100 text-gray-800 rounded-full py-3 px-5 pr-12 text-sm focus:outline-none focus:ring-2 focus:ring-[#2A2A35]/20 transition-all placeholder:text-gray-400"
+                        placeholder="Ask a question..."
+                        autocomplete="off"
+                    >
+                    <button type="submit" class="absolute right-2 p-2 bg-[#2A2A35] hover:bg-black text-white rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed" id="send-btn">
+                        <i data-lucide="send-horizontal" class="w-4 h-4"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // Initialize Lucide Icons
+        // --- CONFIGURATION ---
+        const apiKey = ""; // The environment will provide the key
+        const originalBio = "Ph.D. Candidate and Recitation Instructor at Civil & Environmental Engineering Department of Louisiana State University";
+        
+        // --- LUCIDE ICONS ---
         lucide.createIcons();
+
+        // --- UI LOGIC ---
+        function shareProfile() {
+            // Uses the current URL. If you want a specific URL, replace window.location.href with "https://your-site.com"
+            const url = window.location.href;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Mahdi A. Varjovi Biography',
+                    text: 'Check out this biography profile.',
+                    url: url
+                }).catch(console.error);
+            } else {
+                // Fallback: Copy to clipboard
+                const dummy = document.createElement('input');
+                document.body.appendChild(dummy);
+                dummy.value = url;
+                dummy.select();
+                document.execCommand('copy');
+                document.body.removeChild(dummy);
+                alert('Website address copied to clipboard!');
+            }
+        }
+
+        function toggleRemixMenu() {
+            document.getElementById('remix-menu').classList.toggle('hidden');
+        }
+
+        function openChat() {
+            document.getElementById('chat-modal').classList.remove('hidden');
+            document.getElementById('chat-modal').classList.add('flex');
+            // Prevent body scroll
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeChat() {
+            document.getElementById('chat-modal').classList.add('hidden');
+            document.getElementById('chat-modal').classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        }
+
+        // --- GEMINI API HELPERS ---
+        
+        async function callGemini(prompt, systemInstruction = "") {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            
+            const payload = {
+                contents: [{ parts: [{ text: prompt }] }],
+                systemInstruction: { parts: [{ text: systemInstruction }] }
+            };
+
+            // Retry logic for robustness
+            const maxRetries = 3;
+            for (let i = 0; i < maxRetries; i++) {
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    
+                    const data = await response.json();
+                    return data.candidates[0].content.parts[0].text;
+                } catch (e) {
+                    if (i === maxRetries - 1) throw e;
+                    await new Promise(r => setTimeout(r, 1000 * Math.pow(2, i))); // Exponential backoff
+                }
+            }
+        }
+
+        // --- FEATURE 1: BIO REMIXER ---
+        
+        async function remixBio(style) {
+            const bioTextEl = document.getElementById('bio-text');
+            const originalText = bioTextEl.innerText;
+            
+            // Show loading state
+            bioTextEl.style.opacity = '0.5';
+            document.getElementById('remix-menu').classList.add('hidden');
+            
+            const systemPrompt = "You are an expert copywriter. Rewrite the provided biography text to match the requested style. Keep it concise (under 25 words).";
+            const userPrompt = `Style: ${style}. Text: "${originalBio}"`;
+
+            try {
+                const newBio = await callGemini(userPrompt, systemPrompt);
+                bioTextEl.innerText = newBio;
+            } catch (error) {
+                console.error("Remix failed:", error);
+                bioTextEl.innerText = originalBio; // Fallback
+                alert("Couldn't connect to AI. Please try again.");
+            } finally {
+                bioTextEl.style.opacity = '1';
+            }
+        }
+
+        // --- FEATURE 2: CHATBOT ---
+
+        async function handleChatSubmit(e) {
+            e.preventDefault();
+            const input = document.getElementById('user-input');
+            const message = input.value.trim();
+            if (!message) return;
+
+            // Clear input
+            input.value = '';
+            
+            // Add User Message
+            appendMessage(message, 'user');
+
+            // Add Loading Bubble
+            const loadingId = appendLoading();
+
+            // Prepare Context
+            const systemPrompt = `
+                You are the AI digital assistant for a Ph.D. Candidate in Civil & Environmental Engineering at Louisiana State University (LSU).
+                Your persona is professional, academic, yet approachable.
+                
+                Context about the user:
+                - Role: Ph.D. Candidate and Recitation Instructor.
+                - Department: Civil & Environmental Engineering.
+                - Institution: Louisiana State University.
+                - Contact: References to email, Google Scholar, and LinkedIn are available on the page.
+                
+                Guidelines:
+                - Answer questions about their potential research (assume Civil/Environmental engineering topics like hydrology, structural analysis, or environmental sustainability if asked generally, but admit you don't have their specific thesis details if asked for specifics).
+                - If asked for contact info, direct them to the buttons on the main page.
+                - Keep answers concise (under 3 sentences) suitable for a chat interface.
+            `;
+
+            try {
+                const response = await callGemini(message, systemPrompt);
+                removeMessage(loadingId);
+                appendMessage(response, 'ai');
+            } catch (error) {
+                removeMessage(loadingId);
+                appendMessage("I'm having trouble connecting to the network right now. Please try again later.", 'ai');
+            }
+        }
+
+        function appendMessage(text, sender) {
+            const container = document.getElementById('chat-messages');
+            const div = document.createElement('div');
+            
+            if (sender === 'user') {
+                div.className = "flex items-start gap-2 max-w-[85%] self-end flex-row-reverse";
+                div.innerHTML = `
+                    <div class="w-8 h-8 rounded-full bg-gray-200 flex-shrink-0 flex items-center justify-center text-gray-500 text-xs">You</div>
+                    <div class="bg-[#2A2A35] text-white p-3 rounded-2xl rounded-tr-none shadow-sm text-sm">
+                        ${text}
+                    </div>
+                `;
+            } else {
+                div.className = "flex items-start gap-2 max-w-[85%]";
+                // Parse markdown for AI response
+                const parsedText = marked.parse(text);
+                div.innerHTML = `
+                    <div class="w-8 h-8 rounded-full bg-[#2A2A35] flex-shrink-0 flex items-center justify-center text-white text-xs">AI</div>
+                    <div class="bg-white p-3 rounded-2xl rounded-tl-none shadow-sm text-sm text-gray-700 border border-gray-100 prose prose-sm max-w-none">
+                        ${parsedText}
+                    </div>
+                `;
+            }
+            
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function appendLoading() {
+            const container = document.getElementById('chat-messages');
+            const id = 'loading-' + Date.now();
+            const div = document.createElement('div');
+            div.id = id;
+            div.className = "flex items-start gap-2 max-w-[85%]";
+            div.innerHTML = `
+                <div class="w-8 h-8 rounded-full bg-[#2A2A35] flex-shrink-0 flex items-center justify-center text-white text-xs">AI</div>
+                <div class="bg-white p-4 rounded-2xl rounded-tl-none shadow-sm border border-gray-100 flex gap-1">
+                    <div class="w-2 h-2 bg-gray-400 rounded-full typing-dot"></div>
+                    <div class="w-2 h-2 bg-gray-400 rounded-full typing-dot"></div>
+                    <div class="w-2 h-2 bg-gray-400 rounded-full typing-dot"></div>
+                </div>
+            `;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+            return id;
+        }
+
+        function removeMessage(id) {
+            const el = document.getElementById(id);
+            if (el) el.remove();
+        }
     </script>
 </body>
-
 </html>
