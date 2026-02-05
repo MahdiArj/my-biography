@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biography Profile</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        /* Custom Font Assignments */
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        .font-sans {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Smooth gradient mask for the image to blend into the background */
+        .image-fade-mask {
+            mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+        }
+
+        /* Custom color variables extracted from the reference */
+        :root {
+            --bg-gold: #B6A986; /* The main background color at the bottom */
+            --bg-dark: #2A2A35; /* The darker tone at the top */
+            --text-brown: #3E3425;
+            --btn-bg: #F0F2F0;
+        }
+    </style>
+</head>
+<body class="bg-[#B6A986] min-h-screen flex justify-center items-start sm:items-center font-sans antialiased selection:bg-black/20">
+
+    <!-- Mobile Container (Simulating the phone screen size) -->
+    <div class="relative w-full max-w-md bg-[#B6A986] min-h-screen sm:min-h-[850px] sm:h-auto sm:rounded-[40px] shadow-2xl overflow-hidden flex flex-col">
+        
+        <!-- Top Status Bar Area (Decorative) -->
+        <div class="absolute top-0 w-full p-6 flex justify-between items-center z-20 text-white/80">
+            <!-- Icon: Asterisk/Star (Left) -->
+            <button class="w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-white/30 transition">
+                <i data-lucide="asterisk" class="w-5 h-5 text-white"></i>
+            </button>
+            <!-- Icon: Share (Right) -->
+            <button class="w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-white/30 transition">
+                <i data-lucide="share" class="w-5 h-5 text-white"></i>
+            </button>
+        </div>
+
+        <!-- 
+            BACKGROUND & PHOTO SECTION 
+            The background gradient starts dark behind the head and fades to the gold color.
+        -->
+        <div class="relative w-full h-[55vh] sm:h-[450px]">
+            <!-- Dark backdrop behind photo -->
+            <div class="absolute inset-0 bg-gradient-to-b from-[#2A2A35] to-[#B6A986]"></div>
+
+            <!-- 
+                USER PHOTO 
+                Updated to link to your uploaded file: IMG_2148.jpg
+                Ensure this image file is in the same folder as this HTML file.
+            -->
+            <img 
+                src="IMG_2148.jpg" 
+                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop';"
+                alt="Profile Photo" 
+                class="absolute inset-0 w-full h-full object-cover object-top image-fade-mask opacity-90"
+            >
+            
+            <!-- Extra gradient overlay at the bottom to ensure smooth text readability -->
+            <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#B6A986] via-[#B6A986]/80 to-transparent"></div>
+        </div>
+
+        <!-- CONTENT SECTION -->
+        <div class="relative z-10 px-8 pb-12 flex flex-col items-center -mt-10">
+            
+            <!-- Typography -->
+            <h1 class="font-serif text-4xl sm:text-5xl text-[#3E3425] mb-3 tracking-wide">Biography</h1>
+            
+            <p class="text-center text-[#3E3425]/90 text-sm sm:text-base leading-relaxed font-medium max-w-xs mb-10">
+                Ph.D. Candidate and Recitation Instructor at Civil & Environmental Engineering Department of Louisiana State University
+            </p>
+
+            <!-- Action Buttons Stack -->
+            <div class="w-full flex flex-col gap-4">
+                
+                <!-- Email Button -->
+                <a href="mailto:your.email@lsu.edu" class="group bg-[#F0F2F0] hover:bg-white active:scale-[0.98] transition-all duration-200 h-14 rounded-full flex items-center px-6 shadow-sm">
+                    <div class="text-gray-800">
+                        <i data-lucide="mail" class="w-6 h-6"></i>
+                    </div>
+                    <span class="flex-grow text-center text-gray-800 font-semibold text-sm">Email</span>
+                    <div class="text-gray-400">
+                        <i data-lucide="more-vertical" class="w-4 h-4"></i>
+                    </div>
+                </a>
+
+                <!-- Google Scholar Button -->
+                <a href="#" class="group bg-[#F0F2F0] hover:bg-white active:scale-[0.98] transition-all duration-200 h-14 rounded-full flex items-center px-6 shadow-sm">
+                    <div class="text-gray-800">
+                        <i data-lucide="graduation-cap" class="w-6 h-6"></i>
+                    </div>
+                    <span class="flex-grow text-center text-gray-800 font-semibold text-sm">Google Scholar</span>
+                    <div class="text-gray-400">
+                        <i data-lucide="more-vertical" class="w-4 h-4"></i>
+                    </div>
+                </a>
+
+                <!-- LinkedIn Button -->
+                <a href="#" class="group bg-[#F0F2F0] hover:bg-white active:scale-[0.98] transition-all duration-200 h-14 rounded-full flex items-center px-6 shadow-sm">
+                    <div class="text-gray-800">
+                        <i data-lucide="linkedin" class="w-6 h-6"></i>
+                    </div>
+                    <span class="flex-grow text-center text-gray-800 font-semibold text-sm">LinkedIn</span>
+                    <div class="text-gray-400">
+                        <i data-lucide="more-vertical" class="w-4 h-4"></i>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>
