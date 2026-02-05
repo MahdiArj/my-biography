@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TLW98ZDJZY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-TLW98ZDJZY');
+</script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Biography Profile</title>
@@ -9,7 +19,8 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- Updated Fonts: Viaoda Libre and Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Viaoda+Libre&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- Markdown Parser -->
@@ -17,8 +28,8 @@
     
     <style>
         /* Custom Font Assignments */
-        .font-serif { font-family: 'Playfair Display', serif; }
-        .font-sans { font-family: 'Inter', sans-serif; }
+        .font-serif { font-family: 'Viaoda Libre', serif; }
+        .font-sans { font-family: 'Poppins', sans-serif; }
 
         /* Smooth gradient mask */
         .image-fade-mask {
@@ -32,10 +43,10 @@
 
         /* Custom color variables */
         :root {
-            --bg-gold: #B6A986;
+            --bg-gold: #B7AA7E; /* Updated Background */
             --bg-dark: #2A2A35;
-            --text-brown: #3E3425;
-            --btn-bg: #F0F2F0;
+            --text-brown: #35231E; /* Updated Text Color */
+            --btn-bg: #EEF4F0; /* Updated Button Background */
         }
 
         /* Typing indicator animation */
@@ -51,14 +62,14 @@
         }
     </style>
 </head>
-<body class="bg-[#B6A986] min-h-screen flex justify-center items-start sm:items-center font-sans antialiased selection:bg-black/20">
+<body class="bg-[#B7AA7E] min-h-screen flex justify-center items-start sm:items-center font-sans antialiased selection:bg-black/20">
 
     <!-- Mobile Container -->
-    <div class="relative w-full max-w-md bg-[#B6A986] min-h-screen sm:min-h-[850px] sm:h-auto sm:rounded-[40px] shadow-2xl overflow-hidden flex flex-col transition-all duration-300" id="main-container">
+    <div class="relative w-full max-w-md bg-[#B7AA7E] min-h-screen sm:min-h-[850px] sm:h-auto sm:rounded-[40px] shadow-2xl overflow-hidden flex flex-col transition-all duration-300" id="main-container">
         
         <!-- Top Status Bar -->
         <div class="absolute top-0 w-full p-6 flex justify-end items-center z-20 text-white/80">
-            <!-- Asterisk button removed -->
+            <!-- Share Button -->
             <button onclick="shareProfile()" class="w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-white/30 transition" title="Share Website">
                 <i data-lucide="share" class="w-5 h-5 text-white"></i>
             </button>
@@ -66,28 +77,36 @@
 
         <!-- BACKGROUND & PHOTO SECTION -->
         <div class="relative w-full h-[55vh] sm:h-[450px]">
-            <div class="absolute inset-0 bg-gradient-to-b from-[#2A2A35] to-[#B6A986]"></div>
+            <!-- Updated gradient to match new background color -->
+            <div class="absolute inset-0 bg-gradient-to-b from-[#2A2A35] to-[#B7AA7E]"></div>
             <img 
                 src="IMG_2148.jpg" 
                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop';"
                 alt="Profile Photo" 
                 class="absolute inset-0 w-full h-full object-cover object-top image-fade-mask opacity-90"
             >
-            <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#B6A986] via-[#B6A986]/80 to-transparent"></div>
+            
+            <!-- Scroll Overlay: Updated colors -->
+            <div id="scroll-overlay" class="absolute inset-0 bg-gradient-to-t from-[#B7AA7E] via-[#B7AA7E] to-transparent opacity-0 pointer-events-none transition-opacity duration-100 ease-out z-10"></div>
+            
+            <!-- Static Bottom Blend: Updated colors -->
+            <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#B7AA7E] via-[#B7AA7E]/80 to-transparent z-0"></div>
         </div>
 
         <!-- CONTENT SECTION -->
-        <div class="relative z-10 px-8 pb-12 flex flex-col items-center -mt-10">
+        <div class="relative z-10 px-8 pb-8 flex flex-col items-center -mt-10 flex-grow">
             
-            <h1 class="font-serif text-4xl sm:text-5xl text-[#3E3425] mb-3 tracking-wide">Biography</h1>
+            <!-- Title with requested Font and Color -->
+            <h1 class="font-serif text-4xl sm:text-5xl text-[#35231E] mb-3 tracking-wide text-center">Biography</h1>
             
             <!-- Bio Text with Magic Remix Button -->
             <div class="relative group w-full flex justify-center mb-10">
-                <p id="bio-text" class="text-center text-[#3E3425]/90 text-sm sm:text-base leading-relaxed font-medium max-w-xs transition-all duration-500">
+                <!-- Bio Text with requested Font and Color -->
+                <p id="bio-text" class="text-center text-[#35231E] text-sm sm:text-base leading-relaxed font-medium max-w-xs transition-all duration-500">
                     Ph.D. Candidate and Recitation Instructor at Civil & Environmental Engineering Department of Louisiana State University
                 </p>
                 <!-- Magic Wand Button -->
-                <button onclick="toggleRemixMenu()" class="absolute -right-2 top-0 p-2 text-[#3E3425]/40 hover:text-[#3E3425] transition-colors" title="Remix Bio with AI">
+                <button onclick="toggleRemixMenu()" class="absolute -right-2 top-0 p-2 text-[#35231E]/40 hover:text-[#35231E] transition-colors" title="Remix Bio with AI">
                     <i data-lucide="sparkles" class="w-4 h-4"></i>
                 </button>
                 
@@ -101,9 +120,9 @@
             </div>
 
             <!-- Action Buttons Stack -->
-            <div class="w-full flex flex-col gap-4">
+            <div class="w-full flex flex-col gap-4 mb-8">
                 
-                <!-- NEW: AI Chat Button -->
+                <!-- NEW: AI Chat Button (Colors preserved as requested) -->
                 <button onclick="openChat()" class="group relative overflow-hidden bg-gradient-to-r from-indigo-900 to-[#2A2A35] hover:to-indigo-800 text-white active:scale-[0.98] transition-all duration-200 h-14 rounded-full flex items-center px-6 shadow-lg border border-white/10">
                     <!-- Animated Shine Effect -->
                     <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
@@ -117,39 +136,76 @@
                     </div>
                 </button>
 
-                <!-- Email Button -->
-                <a href="mailto:marjma1@lsu.edu" class="group bg-[#F0F2F0] hover:bg-white active:scale-[0.98] transition-all duration-200 h-14 rounded-full flex items-center px-6 shadow-sm">
-                    <div class="text-gray-800">
+                <!-- Email Button (Updated BG and Text Color) -->
+                <a href="mailto:marjma1@lsu.edu" class="group bg-[#EEF4F0] hover:bg-white active:scale-[0.98] transition-all duration-200 h-14 rounded-full flex items-center px-6 shadow-sm">
+                    <div class="text-[#35231E]">
                         <i data-lucide="mail" class="w-6 h-6"></i>
                     </div>
-                    <span class="flex-grow text-center text-gray-800 font-semibold text-sm">Email</span>
-                    <div class="text-gray-400">
+                    <span class="flex-grow text-center text-[#35231E] font-semibold text-sm">Email</span>
+                    <div class="text-[#35231E]/60">
                         <i data-lucide="more-vertical" class="w-4 h-4"></i>
                     </div>
                 </a>
 
-                <!-- Google Scholar -->
-                <a href="https://scholar.google.com/citations?user=bsUu7D0AAAAJ&hl=en" class="group bg-[#F0F2F0] hover:bg-white active:scale-[0.98] transition-all duration-200 h-14 rounded-full flex items-center px-6 shadow-sm">
-                    <div class="text-gray-800">
+                <!-- Google Scholar (Updated BG and Text Color) -->
+                <a href="https://scholar.google.com/citations?user=bsUu7D0AAAAJ&hl=en" class="group bg-[#EEF4F0] hover:bg-white active:scale-[0.98] transition-all duration-200 h-14 rounded-full flex items-center px-6 shadow-sm">
+                    <div class="text-[#35231E]">
                         <i data-lucide="graduation-cap" class="w-6 h-6"></i>
                     </div>
-                    <span class="flex-grow text-center text-gray-800 font-semibold text-sm">Google Scholar</span>
-                    <div class="text-gray-400">
+                    <span class="flex-grow text-center text-[#35231E] font-semibold text-sm">Google Scholar</span>
+                    <div class="text-[#35231E]/60">
                         <i data-lucide="more-vertical" class="w-4 h-4"></i>
                     </div>
                 </a>
 
-                <!-- LinkedIn -->
-                <a href="https://www.linkedin.com/authwall?trk=bf&trkInfo=AQF0XtTcGhQ84gAAAZwvpoholO_5pikdoH8ojfVlk3QMObDYKK_dIJTV_Bu-EaZ2rEfHj0ZEKmwfJRBrV4HRDua9nip1lsIjZ8iJn2bqkZ-9Jv_FsUyi1xOJ21QnopeEG709kKs=&original_referer=&sessionRedirect=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fmahdi-arjmandazar-390aa495" class="group bg-[#F0F2F0] hover:bg-white active:scale-[0.98] transition-all duration-200 h-14 rounded-full flex items-center px-6 shadow-sm">
-                    <div class="text-gray-800">
+                <!-- LinkedIn (Updated BG and Text Color) -->
+                <a href="https://www.linkedin.com/authwall?trk=bf&trkInfo=AQF0XtTcGhQ84gAAAZwvpoholO_5pikdoH8ojfVlk3QMObDYKK_dIJTV_Bu-EaZ2rEfHj0ZEKmwfJRBrV4HRDua9nip1lsIjZ8iJn2bqkZ-9Jv_FsUyi1xOJ21QnopeEG709kKs=&original_referer=&sessionRedirect=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fmahdi-arjmandazar-390aa495" class="group bg-[#EEF4F0] hover:bg-white active:scale-[0.98] transition-all duration-200 h-14 rounded-full flex items-center px-6 shadow-sm">
+                    <div class="text-[#35231E]">
                         <i data-lucide="linkedin" class="w-6 h-6"></i>
                     </div>
-                    <span class="flex-grow text-center text-gray-800 font-semibold text-sm">LinkedIn</span>
-                    <div class="text-gray-400">
+                    <span class="flex-grow text-center text-[#35231E] font-semibold text-sm">LinkedIn</span>
+                    <div class="text-[#35231E]/60">
                         <i data-lucide="more-vertical" class="w-4 h-4"></i>
                     </div>
                 </a>
 
+                <!-- GitHub (Updated BG and Text Color) -->
+                <a href="#" class="group bg-[#EEF4F0] hover:bg-white active:scale-[0.98] transition-all duration-200 h-14 rounded-full flex items-center px-6 shadow-sm">
+                    <div class="text-[#35231E]">
+                        <i data-lucide="github" class="w-6 h-6"></i>
+                    </div>
+                    <span class="flex-grow text-center text-[#35231E] font-semibold text-sm">GitHub</span>
+                    <div class="text-[#35231E]/60">
+                        <i data-lucide="more-vertical" class="w-4 h-4"></i>
+                    </div>
+                </a>
+
+                <!-- X (Twitter) (Updated BG and Text Color) -->
+                <a href="#" class="group bg-[#EEF4F0] hover:bg-white active:scale-[0.98] transition-all duration-200 h-14 rounded-full flex items-center px-6 shadow-sm">
+                    <div class="text-[#35231E]">
+                        <i data-lucide="twitter" class="w-6 h-6"></i>
+                    </div>
+                    <span class="flex-grow text-center text-[#35231E] font-semibold text-sm">X</span>
+                    <div class="text-[#35231E]/60">
+                        <i data-lucide="more-vertical" class="w-4 h-4"></i>
+                    </div>
+                </a>
+
+                <!-- Instagram (Updated BG and Text Color) -->
+                <a href="#" class="group bg-[#EEF4F0] hover:bg-white active:scale-[0.98] transition-all duration-200 h-14 rounded-full flex items-center px-6 shadow-sm">
+                    <div class="text-[#35231E]">
+                        <i data-lucide="instagram" class="w-6 h-6"></i>
+                    </div>
+                    <span class="flex-grow text-center text-[#35231E] font-semibold text-sm">Instagram</span>
+                    <div class="text-[#35231E]/60">
+                        <i data-lucide="more-vertical" class="w-4 h-4"></i>
+                    </div>
+                </a>
+            </div>
+
+            <!-- COPYRIGHT FOOTER -->
+            <div class="mt-auto pt-4 pb-2 text-center text-[#35231E]/70 text-[10px] sm:text-xs font-sans tracking-wide">
+                <p>&copy; All rights are reserved to the Mahdi A. Varjovi</p>
             </div>
         </div>
     </div>
@@ -211,6 +267,21 @@
         
         // --- LUCIDE ICONS ---
         lucide.createIcons();
+
+        // --- SCROLL EFFECT FOR VANISHING PHOTO ---
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            // The larger this number, the longer it takes to vanish (more scroll required)
+            const maxScroll = 300; 
+            
+            const overlayEl = document.getElementById('scroll-overlay');
+            
+            if (overlayEl) {
+                // Calculate opacity: Starts at 0, goes to 1 as we scroll
+                const opacity = Math.min(1, scrollY / maxScroll);
+                overlayEl.style.opacity = opacity;
+            }
+        });
 
         // --- UI LOGIC ---
         function shareProfile() {
