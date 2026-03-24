@@ -398,10 +398,11 @@
             appendMessage(message, 'user');
             const loadingId = appendLoading();
 
-            // CONSTRUCT SYSTEM PROMPT DYNAMICALLY FROM JSON
+          // CONSTRUCT SYSTEM PROMPT DYNAMICALLY FROM JSON
             let systemPrompt = "You are a helpful assistant.";
             
             if (aiConfig) {
+                // We use fallback arrays [] and stringify to safely handle your detailed JSON
                 systemPrompt = `
                     ${aiConfig.persona}
                     Tone: ${aiConfig.tone}
@@ -409,15 +410,17 @@
                     User Context:
                     ${JSON.stringify(aiConfig.user_context, null, 2)}
                     
-                    Research Interests:
-                    ${aiConfig.research_interests.join(", ")}
+                    Research Expertise:
+                    ${(aiConfig.research_expertise || []).join(", ")}
                     
                     Instructions:
-                    ${aiConfig.contact_instructions}
+                    ${JSON.stringify(aiConfig.supervision_instructions, null, 2)}
+                    
+                    Constraints:
                     ${aiConfig.constraints}
                 `;
             }
-
+          
             try {
                 const response = await callGemini(message, systemPrompt);
                 removeMessage(loadingId);
