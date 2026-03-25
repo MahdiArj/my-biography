@@ -262,7 +262,6 @@
 
     <script>
         // --- CONFIGURATION ---
-        const apiKey = "AIzaSyD1LCJv29L0cMcZw-2GjPkAY9dGZ1dMFwI"; // Updated with user provided key
         let aiConfig = null; // Will hold the data from JSON
         
         // --- LUCIDE ICONS ---
@@ -339,11 +338,21 @@
 
         // --- GEMINI API HELPERS ---
         async function callGemini(prompt, systemInstruction = "") {
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-            const payload = {
-                contents: [{ parts: [{ text: prompt }] }],
-                systemInstruction: { parts: [{ text: systemInstruction }] }
-            };
+    // We are now sending the request to secure Azure backend
+    const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+            message: prompt, 
+            systemPrompt: systemInstruction 
+        })
+    });
+    
+    const data = await response.json();
+    
+    if (data.error) throw new Error(data.error);
+    return data.text;
+}
 
             const maxRetries = 3;
             for (let i = 0; i < maxRetries; i++) {
