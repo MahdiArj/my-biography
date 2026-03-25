@@ -11,6 +11,7 @@ module.exports = async function (context, req) {
 
     const userMessage = req.body.message || "";
     const systemPrompt = req.body.systemPrompt || "";
+    context.log(`🚨 NEW AI QUESTION: "${userMessage}"`);
 
     // 2. Prepare the data to send to Google
     const postData = JSON.stringify({
