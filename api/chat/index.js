@@ -22,7 +22,7 @@ module.exports = async function (context, req) {
     // 3. Set up the classic HTTPS connection
     const options = {
         hostname: 'generativelanguage.googleapis.com',
-        path: `/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${apiKey}`,
+        path: `/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`,
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
