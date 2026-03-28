@@ -21,7 +21,7 @@
     <!-- Fonts: Viaoda Libre (Title) and Poppins (Text) -->
     <link href="https://fonts.googleapis.com/css2?family=Viaoda+Libre&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@0.329.0"></script>
     <!-- Markdown Parser -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     
@@ -170,7 +170,7 @@
                 </a>
 
                 <!-- GitHub -->
-                <a href="#" class="group bg-[#EEF4F0] hover:bg-white active:scale-[0.98] transition-all duration-200 h-14 rounded-full flex items-center px-6 shadow-sm">
+                <a href="https://github.com/MahdiArj" class="group bg-[#EEF4F0] hover:bg-white active:scale-[0.98] transition-all duration-200 h-14 rounded-full flex items-center px-6 shadow-sm">
                     <div class="text-[#35231E]">
                         <i data-lucide="github" class="w-6 h-6"></i>
                     </div>
@@ -181,7 +181,7 @@
                 </a>
 
                 <!-- X (Twitter) -->
-                <a href="#" class="group bg-[#EEF4F0] hover:bg-white active:scale-[0.98] transition-all duration-200 h-14 rounded-full flex items-center px-6 shadow-sm">
+                <a href="https://mobile.twitter.com/Mahdi_Arjomand_" class="group bg-[#EEF4F0] hover:bg-white active:scale-[0.98] transition-all duration-200 h-14 rounded-full flex items-center px-6 shadow-sm">
                     <div class="text-[#35231E]">
                         <i data-lucide="twitter" class="w-6 h-6"></i>
                     </div>
@@ -192,7 +192,7 @@
                 </a>
 
                 <!-- Instagram -->
-                <a href="#" class="group bg-[#EEF4F0] hover:bg-white active:scale-[0.98] transition-all duration-200 h-14 rounded-full flex items-center px-6 shadow-sm">
+                <a href="https://instagram.com/mahdi.arjomandazar?utm_medium=copy_link" class="group bg-[#EEF4F0] hover:bg-white active:scale-[0.98] transition-all duration-200 h-14 rounded-full flex items-center px-6 shadow-sm">
                     <div class="text-[#35231E]">
                         <i data-lucide="instagram" class="w-6 h-6"></i>
                     </div>
@@ -262,7 +262,6 @@
 
     <script>
         // --- CONFIGURATION ---
-        const apiKey = "AIzaSyDH_45muNueTXW6j7u4u8IecSq3Ts680zs"; // Updated with user provided key
         let aiConfig = null; // Will hold the data from JSON
         
         // --- LUCIDE ICONS ---
@@ -337,30 +336,22 @@
             document.body.style.overflow = 'auto';
         }
 
-        // --- GEMINI API HELPERS ---
+// --- GEMINI API HELPERS ---
         async function callGemini(prompt, systemInstruction = "") {
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-            const payload = {
-                contents: [{ parts: [{ text: prompt }] }],
-                systemInstruction: { parts: [{ text: systemInstruction }] }
-            };
-
-            const maxRetries = 3;
-            for (let i = 0; i < maxRetries; i++) {
-                try {
-                    const response = await fetch(url, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                    const data = await response.json();
-                    return data.candidates[0].content.parts[0].text;
-                } catch (e) {
-                    if (i === maxRetries - 1) throw e;
-                    await new Promise(r => setTimeout(r, 1000 * Math.pow(2, i))); 
-                }
-            }
+            // We are now sending the request to secure Azure backend
+            const response = await fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    message: prompt, 
+                    systemPrompt: systemInstruction 
+                })
+            });
+            
+            const data = await response.json();
+            
+            if (data.error) throw new Error(data.error);
+            return data.text;
         }
 
         // --- FEATURE 1: BIO REMIXER ---
@@ -398,10 +389,11 @@
             appendMessage(message, 'user');
             const loadingId = appendLoading();
 
-            // CONSTRUCT SYSTEM PROMPT DYNAMICALLY FROM JSON
+          // CONSTRUCT SYSTEM PROMPT DYNAMICALLY FROM JSON
             let systemPrompt = "You are a helpful assistant.";
             
             if (aiConfig) {
+                // We use fallback arrays [] and stringify to safely handle your detailed JSON
                 systemPrompt = `
                     ${aiConfig.persona}
                     Tone: ${aiConfig.tone}
@@ -409,15 +401,17 @@
                     User Context:
                     ${JSON.stringify(aiConfig.user_context, null, 2)}
                     
-                    Research Interests:
-                    ${aiConfig.research_interests.join(", ")}
+                    Research Expertise:
+                    ${(aiConfig.research_expertise || []).join(", ")}
                     
                     Instructions:
-                    ${aiConfig.contact_instructions}
+                    ${JSON.stringify(aiConfig.supervision_instructions, null, 2)}
+                    
+                    Constraints:
                     ${aiConfig.constraints}
                 `;
             }
-
+          
             try {
                 const response = await callGemini(message, systemPrompt);
                 removeMessage(loadingId);
