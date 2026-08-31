@@ -159,7 +159,7 @@
                 </a>
 
                 <!-- LinkedIn -->
-                <a href="https://www.linkedin.com/authwall?trk=bf&trkInfo=AQF0XtTcGhQ84gAAAZwvpoholO_5pikdoH8ojfVlk3QMObDYKK_dIJTV_Bu-EaZ2rEfHj0ZEKmwfJRBrV4HRDua9nip1lsIjZ8iJn2bqkZ-9Jv_FsUyi1xOJ21QnopeEG709kKs=&original_referer=&sessionRedirect=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fmahdi-arjmandazar-390aa495" class="group bg-[#EEF4F0] hover:bg-white active:scale-[0.98] transition-all duration-200 h-14 rounded-full flex items-center px-6 shadow-sm">
+                <a href="https://www.linkedin.com/in/mahdi-arjmandazar-varjovi-390aa495" class="group bg-[#EEF4F0] hover:bg-white active:scale-[0.98] transition-all duration-200 h-14 rounded-full flex items-center px-6 shadow-sm">
                     <div class="text-[#35231E]">
                         <i data-lucide="linkedin" class="w-6 h-6"></i>
                     </div>
@@ -192,7 +192,7 @@
                 </a>
 
                 <!-- Instagram -->
-                <a href="https://instagram.com/mahdi.arjomandazar?utm_medium=copy_link" class="group bg-[#EEF4F0] hover:bg-white active:scale-[0.98] transition-all duration-200 h-14 rounded-full flex items-center px-6 shadow-sm">
+                <a href="https://www.instagram.com/mahdi.arjmandazar" class="group bg-[#EEF4F0] hover:bg-white active:scale-[0.98] transition-all duration-200 h-14 rounded-full flex items-center px-6 shadow-sm">
                     <div class="text-[#35231E]">
                         <i data-lucide="instagram" class="w-6 h-6"></i>
                     </div>
@@ -471,6 +471,54 @@
             if (el) el.remove();
         }
     </script>
+  <div id="ai-announcement" class="fixed bottom-6 right-6 max-w-sm bg-indigo-600 text-white px-4 py-4 rounded-xl shadow-2xl flex items-start justify-between z-50 transition-all duration-700 ease-out translate-y-24 opacity-0 pointer-events-none">
+  <div>
+    <h4 class="font-bold text-sm flex items-center gap-2">
+      ✨ AI Assistant Live
+    </h4>
+    <p class="text-sm mt-1 text-indigo-100">
+      My digital assistant is officially online! Feel free to ask it about my background, research, or how to get in touch.
+    </p>
+  </div>
+  <button id="close-announcement" class="ml-4 mt-1 text-indigo-200 hover:text-white focus:outline-none transition-colors">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+  </button>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const announcement = document.getElementById("ai-announcement");
+    const closeBtn = document.getElementById("close-announcement");
+
+    // Set expiration for 7 days from today (Expires April 4, 2026)
+    const expirationDate = new Date("2026-04-04T23:59:59");
+    const currentDate = new Date();
+
+    // Check if the user has already clicked the 'X'
+    const isDismissed = localStorage.getItem("aiPopupDismissed");
+
+    // Only show if the campaign is active AND the user hasn't closed it
+    if (currentDate < expirationDate && !isDismissed) {
+      // Small 1-second delay so the page loads first, then it slides in
+      setTimeout(() => {
+        // Remove the invisible/hidden classes
+        announcement.classList.remove("translate-y-24", "opacity-0", "pointer-events-none");
+        // Add the visible/resting classes
+        announcement.classList.add("translate-y-0", "opacity-100");
+      }, 1000); 
+    }
+
+    // Handle the close button click (Slide it back down)
+    closeBtn.addEventListener("click", () => {
+      // Reverse the animation classes
+      announcement.classList.remove("translate-y-0", "opacity-100");
+      announcement.classList.add("translate-y-24", "opacity-0", "pointer-events-none");
+      
+      // Save their preference to the browser memory
+      localStorage.setItem("aiPopupDismissed", "true");
+    });
+  });
+</script>
 </body>
 </html>
 
